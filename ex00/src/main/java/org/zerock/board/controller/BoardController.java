@@ -10,7 +10,9 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/list.do", method = RequestMethod.GET)
 	public String list() {
+		
 		return "/board/list";
+		
 	}
 	
 	

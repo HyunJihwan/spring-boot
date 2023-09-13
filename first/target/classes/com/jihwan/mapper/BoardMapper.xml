@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jihwan.mapper.BoardMapper">
+<!-- 게시판 리스트 -->
+	<select id="list" resultType="com.jihwan.board.vo.BoardVO">
+		select * from(
+			select rownum rnum, no, title, writer, writeDate, hit
+			from(
+				select no, title, writer, writeDate, hit
+				from board
+				order by no desc
+			)
+		)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM board
+	</select>
+</mapper>
