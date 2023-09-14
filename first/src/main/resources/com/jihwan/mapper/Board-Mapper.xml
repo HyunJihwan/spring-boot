@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jihwan.board.mapper.BoardMapper">
+<!-- 게시판 리스트 -->
+	<select id="selectSearchBoardList" resultType="com.jihwan.board.vo.BoardVO">
+		select * from(
+			select rownum rnum, bno, title, writer,content, regdate, viewcnt
+			from(
+				select bno, title,content, writer, regdate, viewcnt
+				from board
+				order by bno desc
+			)
+		)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+</mapper>

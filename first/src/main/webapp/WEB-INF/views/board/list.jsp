@@ -79,7 +79,7 @@ location = "view.do?no=" + no + "&inc=1" + query;
 
 		<ul class="list-group">
 
-			<c:if test="${empty list }">
+			<c:if test="${empty boardList}">
 
 				<!-- 데이터가 존재하지 않는 경우 -->
 
@@ -87,18 +87,18 @@ location = "view.do?no=" + no + "&inc=1" + query;
 
 			</c:if>
 
-			<c:if test="${!empty list }">
+			<c:if test="${!empty boardList }">
 
-				<c:forEach items="${list }" var="vo">
+				<c:forEach items="${boardList }" var="vo">
 
 					<li class="list-group-item dataRow">
 
 						<div>
 
-							<span class="no">${vo.no }</span>. ${vo.title }
+							<span class="no">${vo.BNO }</span>. ${vo.TITLE }
 
-						</div> ${vo.writer } (<fmt:formatDate value="${vo.writeDate }" />) <span
-						class="badge">${vo.hit }</span>
+						</div> ${vo.WRITER } (<fmt:formatDate value="${vo.REGDATE }" />) <span
+						class="badge">${vo.VIEWCNT }</span>
 
 					</li>
 

@@ -1,10 +1,14 @@
 package com.jihwan.board.controller;
 
+import java.sql.SQLException;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jihwan.board.service.BoardService;
 import com.webjjang.util.PageObject;
@@ -21,11 +25,16 @@ public class BoardController {
 	@GetMapping("/list.do")
 	// 실행할 메서드 만들기
 	// model 안에 request가 있다. model에 데이터를 저장하면 request에 저장이됨
-	public String list(PageObject pageObject, Model model) {
+	public ModelAndView list(PageObject pageObject, ModelAndView mnv) throws SQLException {
+		String url = "board/list";
 		System.out.println("보드컨트롤러");
-		model.addAttribute("list", boardService.list(pageObject));
+		Map<String, Object> dataMap = boardService.selecBoardList(pageObject);
+		
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		System.out.println("보드컨트롤러2");
 		// /WEB-INF/views/ + board/list + .jsp
-		return "board/list";
+		return mnv;
 	}
 	
 }
