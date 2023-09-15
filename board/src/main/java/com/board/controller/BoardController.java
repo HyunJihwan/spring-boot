@@ -1,5 +1,6 @@
 package com.board.controller;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -89,4 +91,16 @@ public class BoardController {
 	            return new ResponseEntity<>("N", HttpStatus.INTERNAL_SERVER_ERROR);
 	        }
 	    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(Locale locale, Model model, HttpServletRequest request) throws Exception {
+		if(boardService.delete(Integer.parseInt((String)request.getParameter("seq"))) == 1) {
+			return "Y";
+		}else {
+			return "N";
+		}
+	}
+	
+	
 }

@@ -53,5 +53,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.update(namespace+".update", dto);
 	}
 
+	@Override
+	public int delete(int seq) throws SQLException {
+		
+		return sqlSession.delete(namespace+".delete", seq);
+	}
+
 	
 }

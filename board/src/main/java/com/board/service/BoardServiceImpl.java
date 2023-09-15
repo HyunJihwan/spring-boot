@@ -44,6 +44,12 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	@Override
+	public int delete(int seq) throws SQLException {
+		
+		return boardDAO.delete(seq);
+	}
+
 	
 
 	

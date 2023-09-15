@@ -51,7 +51,7 @@
         <h2>게시판 등록</h2>
         <input type="text" placeholder="제목" id="subject" name="subject">
         <input type="text" placeholder="작성자" id="name" name="name">
-        <textarea placeholder="내용" id="content" name="content" rows="4"></textarea>
+        <textarea placeholder="내용" id="content" name="content" rows="4" style="width: 410px; height: 113px;"></textarea>
         <button type="button" id="board_regi" onclick="fn_boardRegi();">등록</button>
     </form>
 </body>

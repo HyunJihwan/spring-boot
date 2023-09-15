@@ -65,4 +65,8 @@
 			SEQ = #{seq}
 	</update>
 	
+	<delete id="delete">
+		DELETE FROM SUPERBOARD WHERE SEQ = #{SEQ}
+	</delete>
+	
 </mapper>

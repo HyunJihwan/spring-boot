@@ -15,6 +15,9 @@ public interface BoardService {
 
 	public int update(BoardDTO dto) throws SQLException;
 
+	public int delete(int seq) throws SQLException;
+
+
 
 	 
 

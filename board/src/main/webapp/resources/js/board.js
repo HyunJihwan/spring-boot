@@ -77,9 +77,5 @@ function fn_boardUpdate(seq){
 	
 };
 
-function fn_boardDelete(seq){
-	
-	
-};
 
 
