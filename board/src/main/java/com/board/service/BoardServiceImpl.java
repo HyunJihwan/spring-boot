@@ -22,6 +22,24 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.list();
 	}
 
+	@Override
+	public int regi(BoardDTO dto) throws SQLException {
+		if (boardDAO.getMaxSeq() == null) { // 게시글이 존재하지 않을 때
+			dto.setSeq(1); // SEQ는 1
+		} else { // 게시글이 존재할 때
+			dto.setSeq(boardDAO.getMaxSeq() + 1); // 최대값에 +1
+		}
+		return boardDAO.regi(dto);
+	}
+
+	@Override
+	public BoardDTO view(int seq) throws SQLException {
+		boardDAO.updateReadCount(seq);
+		return boardDAO.view(seq);
+	}
+
+	
+
 	
 
 	

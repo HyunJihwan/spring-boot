@@ -7,6 +7,13 @@ import com.board.domain.BoardDTO;
 
 public interface BoardService {
 
-	public List list() throws Exception; 
+	public List list() throws Exception;
+
+	public int regi(BoardDTO dto) throws SQLException;
+
+	public BoardDTO view(int seq) throws SQLException;
+
+
+	 
 
 }

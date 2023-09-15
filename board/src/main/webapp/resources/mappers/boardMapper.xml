@@ -6,5 +6,54 @@
 	<select id="list" resultType="com.board.domain.BoardDTO">
 		SELECT seq, subject, content, name, reg_date, readCount
 		FROM superboard
+		order by seq desc
 	</select>
+	
+	<select id="maxSeq" resultType="java.lang.Integer">
+		SELECT MAX(SEQ) 
+		FROM superboard
+	</select>
+	
+	<insert id="regi">
+	 	INSERT INTO 
+	 	SUPERBOARD(
+	 		SEQ,
+	 		SUBJECT,
+	 		CONTENT,
+	 		NAME,
+	 		REG_DATE,
+	 		READCOUNT
+	 	) 
+	 	VALUES(
+	 		#{seq},
+	 		#{subject},
+	 		#{content},
+	 		#{name},
+	 		#{reg_date},
+	 		0
+	 	) 
+	</insert>
+	
+	<select id="view" resultType="com.board.domain.BoardDTO">
+	 	SELECT 
+ 			SEQ,
+ 			SUBJECT,
+ 			CONTENT,
+ 			NAME,
+ 			REG_DATE,
+ 			READCOUNT
+		FROM
+ 			SUPERBOARD
+ 		WHERE
+ 			SEQ = #{seq}
+	</select>
+		
+	<update id="updateReadCount">
+		UPDATE SUPERBOARD
+		SET 
+			READCOUNT = READCOUNT + 1
+		WHERE
+			SEQ = #{seq}	 
+	</update>
+	
 </mapper>
