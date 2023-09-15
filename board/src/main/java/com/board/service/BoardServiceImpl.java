@@ -38,6 +38,12 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.view(seq);
 	}
 
+	@Override
+	public int update(BoardDTO dto) throws SQLException {
+		return boardDAO.update(dto);
+		
+	}
+
 	
 
 	

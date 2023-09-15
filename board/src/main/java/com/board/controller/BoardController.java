@@ -62,7 +62,6 @@ public class BoardController {
 	    }
 	}
 	
-	
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public ModelAndView view(@RequestParam("seq") int seq, ModelAndView mnv) throws SQLException {
 	    String url = "/board/view";
@@ -72,5 +71,22 @@ public class BoardController {
 	    return mnv;
 	}
 	
+	@RequestMapping(value = "/goUpdateView", method = RequestMethod.GET)
+	public String updateView(Locale locale, Model model, HttpServletRequest request) throws Exception {
+		BoardDTO dto = boardService.view(Integer.parseInt((String)request.getParameter("seq").trim()));
+		System.out.println("ㅎㅇ");
+		model.addAttribute("view", dto);
+		System.out.println("ㅎ2ㅇ");
+		return "/board/update";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public ResponseEntity<String> update(Locale locale, Model model, BoardDTO dto) throws Exception {
+	       	if (boardService.update(dto) == 1) {
+	            return new ResponseEntity<>("Y", HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>("N", HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
 }

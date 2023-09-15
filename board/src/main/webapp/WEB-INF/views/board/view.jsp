@@ -6,41 +6,31 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<%-- <script src="${path}/resources/js/board.js"></script> --%>
-<title>Insert title here</title>
+<script src="${path}/resources/js/board.js"></script>
+<title>게시글 상세 정보</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 10px;
+    }
+    .btn {
+        margin-right: 10px;
+    }
+</style>
 </head>
 <body>
 <form id="role">
-<div>제목 : ${view.subject} 조회수 : ${view.readCount}</div>
-<div>작성자 : ${view.name}</div>
-<div>내용 : ${view.content} </div>
-<button type="button" onclick='location.href="/board/list"'>목록</button>
-<button type="button" onclick='fn_goUpdateView(${view.seq})'>수정</button>
-<button type="button" onclick='fn_boardDelete(${view.seq})'>삭제</button>
+    <input type="hidden" value="" name="seq" id="seq">
+    <h2>${view.subject}</h2>
+    <div>작성자: ${view.name}</div>
+    <div>조회수: ${view.readCount}</div>
+    <hr>
+    <div>${view.content}</div>
+    <hr>
+    <button type="button" class="btn" onclick='location.href="/board/list"'>목록</button>
+    <button type="button" class="btn" onclick='fn_goUpdateView(${view.seq})'>수정</button>
+    <button type="button" class="btn" onclick='fn_boardDelete(${view.seq})'>삭제</button>
 </form>
 </body>
-
-<script>
-function fn_goView(seq){
-	$("#seq").val(seq);
-
-	var f = $("#role");
-	f.attr("action", "/board/view");
-	f.attr("method", "GET");
-	f.submit();
-	
-};
-
-function fn_goUpdateView(seq){
-	
-	
-};
-
-function fn_boardDelete(seq){
-	
-	
-};
-
-</script>
-
 </html>

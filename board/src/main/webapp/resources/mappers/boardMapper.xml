@@ -56,4 +56,13 @@
 			SEQ = #{seq}	 
 	</update>
 	
+	<update id="update">
+		UPDATE SUPERBOARD
+		SET
+			SUBJECT = #{subject},
+			CONTENT = #{content}
+		WHERE
+			SEQ = #{seq}
+	</update>
+	
 </mapper>

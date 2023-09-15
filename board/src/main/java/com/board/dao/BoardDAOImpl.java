@@ -47,5 +47,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectOne(namespace+".view", seq);
 	}
 
+	@Override
+	public int update(BoardDTO dto) throws SQLException {
+		
+		return sqlSession.update(namespace+".update", dto);
+	}
+
 	
 }

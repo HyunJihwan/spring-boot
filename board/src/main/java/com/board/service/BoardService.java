@@ -13,6 +13,8 @@ public interface BoardService {
 
 	public BoardDTO view(int seq) throws SQLException;
 
+	public int update(BoardDTO dto) throws SQLException;
+
 
 	 
 

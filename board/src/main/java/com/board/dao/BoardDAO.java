@@ -15,6 +15,8 @@ public interface BoardDAO {
 
  public void updateReadCount(int seq) throws SQLException;
 
- public BoardDTO view(int seq) throws SQLException; 
+ public BoardDTO view(int seq) throws SQLException;
+
+ public int update(BoardDTO dto) throws SQLException; 
 
 }
