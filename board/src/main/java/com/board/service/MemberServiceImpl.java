@@ -1,5 +1,6 @@
 package com.board.service;
 
+import java.lang.reflect.Member;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void register(MemberDTO member) throws SQLException {
+	public void registerMember(String email, String password, String name ,String id) throws SQLException {
 		
-		 memberDAO.regist(member);
-		
+		memberDAO.regist(id,email,password,name);
 	}
+
 	
 	
 	

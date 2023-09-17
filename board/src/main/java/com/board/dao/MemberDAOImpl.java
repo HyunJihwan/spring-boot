@@ -1,5 +1,6 @@
 package com.board.dao;
 
+import java.lang.reflect.Member;
 import java.sql.SQLException;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,11 +23,19 @@ public class MemberDAOImpl implements MemberDAO{
 		return sqlSession.selectOne(namespace+".login", dto);
 	}
 
-	@Override
-	public String regist(MemberDTO member) throws SQLException {
-	    int result = sqlSession.insert(namespace + ".regist", member);
-	    return String.valueOf(result);
-	}
+	
+
+	 @Override
+	   public void regist(String email, String password, String name, String id) throws SQLException {
+	        MemberDTO memberDTO = new MemberDTO();
+	        memberDTO.setEmail(email);
+	        memberDTO.setPassword(password);
+	        memberDTO.setName(name);
+	        memberDTO.setId(id);
+	        sqlSession.insert(namespace + ".regist", memberDTO);
+	    }
+
+
 
 	
 }

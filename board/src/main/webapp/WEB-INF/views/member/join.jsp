@@ -28,9 +28,8 @@
 						<button type="button" id="email_auth_btn" class="email_auth_btn">인증번호 받기</button>
 					</div>
 					<input type="text" placeholder="인증번호 입력" id="email_auth_key">
-					<button type="button" id="email_auth_real" class="email_auth_btn">인증번호 확인</button>
 				</div>
-				<button type="button" id="join" class="join_btn" onclick='location.href="/member/regist"'>가입하기</button>
+				<button type="button" id="join" class="join_btn" onclick="fn_join()">가입하기</button>
 			</form>
 		</div>
 	</div>
@@ -48,7 +47,7 @@
 		
 	$.ajax({
 		type : "POST",
-		url : "/join",
+		url : "<%=request.getContextPath()%>/member/join.do",
 		data : formData,
 		success: function(data){
 			if(data == "Y"){
@@ -63,6 +62,9 @@
 			console.log(data);
 		}
 	});
+
+// 	$('#join_frm').submit();
+// 	alert('회원가입이 정상적으로 되었습니다.');
  }
  
  $(function() { 
@@ -123,11 +125,11 @@
 	});
 	
 	$('#id').focusout(function(){
-		var id = $('#id').val();
+		var id = $('#id').val().trim();
 	
 		$.ajax({
 			type : "POST",
-			url : "/idCheck",
+			url : "<%=request.getContextPath()%>/member/idCheck.do",
 			data : {id : id},
 			success: function(data){
 				console.log(data);
@@ -161,6 +163,5 @@
 		}); 
 	});
  });
-
 </script>
 </html>

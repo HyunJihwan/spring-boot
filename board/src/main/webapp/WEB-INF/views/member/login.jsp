@@ -14,7 +14,7 @@
 <div>아이디 : <input type="text" id="id" name="id"></div>
 <div>비밀번호 : <input type="password" id="password" name="password" ></div>
 <button type="button" onclick="fn_login();">로그인</button>
-<button type="button" onclick='location.href="/member/join"'>회원가입</button>
+<button type="button" onclick='location.href="/member/joinForm"'>회원가입</button>
 </form>
 </body>
 
