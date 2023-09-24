@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.board.domain.MemberDTO;
 import com.board.service.MemberService;
+
 
 @Controller
 public class MemberController {
@@ -36,13 +39,14 @@ public class MemberController {
     public String login(Locale locale, Model model) {
         return "member/login";
     }
-
+    
     @ResponseBody
     @RequestMapping(value = "/member/login", method = RequestMethod.POST)
     public String regi(Locale locale, Model model, MemberDTO dto, HttpSession session) throws Exception {
         MemberDTO dto2 = memberService.login(dto);
         if (dto2 != null) { // 수정: dto가 아닌 dto2로 비교
             session.setAttribute("id", dto2.getId());
+            System.out.println(dto2.getId());
             return "Y";
         } else {
             return "N";
@@ -89,35 +93,48 @@ public class MemberController {
  
 	}
     
-    @ResponseBody
     @RequestMapping(value = "/member/join", method = RequestMethod.POST)
-    public void register(@RequestParam("email") String email, 
+    public String register(
             @RequestParam("password") String password, @RequestParam("name") String name,
-            @RequestParam("id") String id,HttpServletRequest req, HttpServletResponse res) throws Exception {
+            @RequestParam("id") String id, HttpServletRequest req, HttpServletResponse res) throws Exception {
         // 회원 가입 로직
+        System.out.println("희성1");
         try {
             // 회원 정보 데이터베이스에 저장
-            memberService.registerMember(id,email, password, name);
-
-            // 회원 가입이 정상적으로 완료되면 회원에게 메시지 표시
-            res.setContentType("text/html; charset=utf-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script>");
-            out.println("alert('회원가입이 정상적으로 완료되었습니다.');");
-            out.println("</script>");
-
-            // 회원 가입 완료 후 홈페이지 또는 다른 페이지로 리다이렉션
-            res.sendRedirect("/"); // 홈페이지 경로로 변경
+            System.out.println("희성2");
+            System.out.println(id);
+            System.out.println(password);
+            System.out.println(name);
+            memberService.registerMember(id, password, name);
+            System.out.println("희성3");
+            // 회원 가입이 정상적으로 완료되면 "Y" 반환
+            return "Y";
         } catch (Exception e) {
-        	e.printStackTrace();
-            // 오류 메시지를 클라이언트에게 전달
-            res.setContentType("text/html; charset=utf-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script>");
-            out.println("alert('회원가입 중 오류가 발생했습니다.');");
-            out.println("history.back();"); // 이전 페이지로 돌아가도록 설정
-            out.println("</script>");
+            System.out.println("희성4");
+            e.printStackTrace();
+            // 오류 메시지를 클라이언트에게 전달하고 "N" 반환
+            return "N";
         }
     }
 
+    
+    @RequestMapping(value = "/idCheck", method = RequestMethod.GET)
+    @ResponseBody
+	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
+		
+		ResponseEntity<String> entity = null;
+			
+		try {
+			MemberDTO member = memberService.selectMemberById(id);
+			entity = new ResponseEntity<String>(member == null ? id : "", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
+	}
+	
+    
+    
 }

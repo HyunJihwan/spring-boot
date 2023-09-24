@@ -26,14 +26,21 @@ public class MemberDAOImpl implements MemberDAO{
 	
 
 	 @Override
-	   public void regist(String email, String password, String name, String id) throws SQLException {
+	   public void regist(String password, String name, String id) throws SQLException {
 	        MemberDTO memberDTO = new MemberDTO();
-	        memberDTO.setEmail(email);
 	        memberDTO.setPassword(password);
 	        memberDTO.setName(name);
 	        memberDTO.setId(id);
 	        sqlSession.insert(namespace + ".regist", memberDTO);
 	    }
+
+
+
+	@Override
+	public MemberDTO selectMemberById(String id) throws SQLException {
+		
+		return sqlSession.selectOne(namespace + ".selectMemberById", id);
+	}
 
 
 

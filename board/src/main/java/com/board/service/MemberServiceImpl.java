@@ -22,9 +22,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void registerMember(String email, String password, String name ,String id) throws SQLException {
+	public void registerMember(String password, String name ,String id) throws SQLException {
 		
-		memberDAO.regist(id,email,password,name);
+		memberDAO.regist(id,password,name);
+		
+	}
+
+	@Override
+	public MemberDTO selectMemberById(String id) throws SQLException {
+		
+		return memberDAO.selectMemberById(id);
 	}
 
 	

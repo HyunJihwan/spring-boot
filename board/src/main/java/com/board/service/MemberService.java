@@ -11,6 +11,8 @@ public interface MemberService {
 
 	public MemberDTO login(MemberDTO dto) throws SQLException;
 
-	public void registerMember(String email, String password, String name, String id) throws SQLException;
+	public void registerMember(String password, String name, String id) throws SQLException;
+
+	public MemberDTO selectMemberById(String id) throws SQLException;
 	
 }

@@ -47,7 +47,7 @@
 		
 	$.ajax({
 		type : "POST",
-		url : "<%=request.getContextPath()%>/member/join.do",
+		url : "<%=request.getContextPath()%>/member/join",
 		data : formData,
 		success: function(data){
 			if(data == "Y"){
@@ -63,8 +63,7 @@
 		}
 	});
 
-// 	$('#join_frm').submit();
-// 	alert('회원가입이 정상적으로 되었습니다.');
+	
  }
  
  $(function() { 

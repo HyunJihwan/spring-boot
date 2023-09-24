@@ -6,8 +6,7 @@
 	<select id="login" resultType="com.board.domain.MemberDTO">
 	 	SELECT 
  			ID,
- 			PASSWORD,
- 			NAME
+ 			PASSWORD
 		FROM
  			SUPERMEMBER
  		WHERE
@@ -16,8 +15,14 @@
 	</select>
 	
 	<insert id="regist">
-		INSERT INTO supermember(id,password,email) VALUES(
-			#{id}, #{password}, #{email}
+		INSERT INTO SUPERMEMBER(id,password,name) VALUES(
+			#{id}, #{password}, #{name}
 		)
 	</insert>
+	
+	<select id="selectMemberById" resultType="String">
+		SELECT *
+		FROM SUPERMEMBER
+		where id = #{id}
+	</select>
 </mapper>

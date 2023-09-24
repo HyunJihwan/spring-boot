@@ -9,6 +9,8 @@ public interface MemberDAO {
 
 	public MemberDTO login(MemberDTO dto) throws SQLException;
 
-	public void regist(String email, String password, String name, String id) throws SQLException;
+	public void regist(String password, String name, String id) throws SQLException;
+
+	public MemberDTO selectMemberById(String id) throws SQLException;
 
 }
