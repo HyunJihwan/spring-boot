@@ -12,4 +12,5 @@ public class BoardDTO {
 	private String reg_date;
 	private int readCount;
 	
+	
 }

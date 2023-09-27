@@ -2,6 +2,7 @@ package com.board.dao;
 
 import java.lang.reflect.Member;
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,27 @@ public class MemberDAOImpl implements MemberDAO{
 
 	
 
-	 @Override
-	   public void regist(String password, String name, String id) throws SQLException {
-	        MemberDTO memberDTO = new MemberDTO();
-	        memberDTO.setPassword(password);
-	        memberDTO.setName(name);
-	        memberDTO.setId(id);
-	        sqlSession.insert(namespace + ".regist", memberDTO);
-	    }
-
-
-
 	@Override
 	public MemberDTO selectMemberById(String id) throws SQLException {
 		
 		return sqlSession.selectOne(namespace + ".selectMemberById", id);
+	}
+
+
+
+	@Override
+	public void insert(MemberDTO dto) throws SQLException {
+		
+		sqlSession.insert(namespace + ".insertMember", dto);
+		
+	}
+
+
+
+	@Override
+	public int getMail(Map<String, String> map) throws SQLException {
+		
+		return sqlSession.selectOne(namespace + ".getMail" ,map);
 	}
 
 

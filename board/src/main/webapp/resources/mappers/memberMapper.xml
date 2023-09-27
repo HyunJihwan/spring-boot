@@ -14,15 +14,24 @@
  			AND PASSWORD = #{password}
 	</select>
 	
-	<insert id="regist">
-		INSERT INTO SUPERMEMBER(id,password,name) VALUES(
-			#{id}, #{password}, #{name}
+	<insert id="insertMember">
+		INSERT INTO SUPERMEMBER(id,password,name,email) VALUES(
+			#{id}, #{password}, #{name}, #{email}
 		)
 	</insert>
 	
-	<select id="selectMemberById" resultType="String">
+	<select id="selectMemberById" resultType="com.board.domain.MemberDTO">
 		SELECT *
 		FROM SUPERMEMBER
 		where id = #{id}
 	</select>
+	
+	<select id="getMail" resultType="com.board.domain.MemberDTO">
+		SEELCT COUNT(*)
+		FROM SUPERMEMBER
+		where name = #{name, jdbcType=VARCHAR}
+		AND email = #{email, jdbcType=VARCHAR}
+	</select>
+	
+	
 </mapper>

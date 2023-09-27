@@ -1,8 +1,12 @@
 package com.board.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Member;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -17,6 +21,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -93,32 +99,24 @@ public class MemberController {
  
 	}
     
-    @RequestMapping(value = "/member/join", method = RequestMethod.POST)
-    public String register(
-            @RequestParam("password") String password, @RequestParam("name") String name,
-            @RequestParam("id") String id, HttpServletRequest req, HttpServletResponse res) throws Exception {
-        // 회원 가입 로직
-        System.out.println("희성1");
-        try {
-            // 회원 정보 데이터베이스에 저장
-            System.out.println("희성2");
-            System.out.println(id);
-            System.out.println(password);
-            System.out.println(name);
-            memberService.registerMember(id, password, name);
-            System.out.println("희성3");
-            // 회원 가입이 정상적으로 완료되면 "Y" 반환
-            return "Y";
-        } catch (Exception e) {
-            System.out.println("희성4");
-            e.printStackTrace();
-            // 오류 메시지를 클라이언트에게 전달하고 "N" 반환
-            return "N";
-        }
+    @RequestMapping(value = "/member/register", method = RequestMethod.POST)
+    public String register(MemberDTO dto, String domainselect, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
+         dto.setEmail(dto.getEmail() + domainselect);
+         memberService.register(dto);
+         
+          res.setContentType("text/html; charset=utf-8");
+	      PrintWriter out = res.getWriter();
+	      out.println("<script>");
+	      out.println("alert('회원가입이 정상적으로 되었습니다.');");
+	      out.println("</script>");
+	      
+	      return "member/login";
+         
+         
     }
 
     
-    @RequestMapping(value = "/idCheck", method = RequestMethod.GET)
+    @RequestMapping(value ="/member/idCheck", method = RequestMethod.POST)
     @ResponseBody
 	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
 		
@@ -135,6 +133,27 @@ public class MemberController {
 		return entity;
 	}
 	
+  //이메일 인증
+  		@GetMapping("/mailCheck")
+  		@ResponseBody
+  		public String mailCheck(String email) throws Exception{
+  			return memberService.joinEmail(email);
+  					
+  		};
+    @RequestMapping(value= "/member/mailChecked" ,method = RequestMethod.GET)
+    @ResponseBody
+    public String mail (String email,String name) throws SQLException {
+    	
+    	Map<String, String> map = new HashMap<>();
+    	
+    	map.put("email", email);
+    	map.put("name", name);
+    	
+    	int num = memberService.getMail(map);
+    	
+    	return Integer.toString(num);
+    	
+    }
     
     
 }
