@@ -64,40 +64,7 @@ public class MemberController {
         return "member/join";
     }
 
-    @ResponseBody
-	@RequestMapping(value = "/emailAuth", method = RequestMethod.POST)
-	public String emailAuth(String email) {		
-		Random random = new Random();
-		int checkNum = random.nextInt(888888) + 111111;
 
-		/* 이메일 보내기 */
-        String setFrom = "lsi6930@naver.com";
-        String toMail = email;
-        String title = "회원가입 인증 이메일 입니다.";
-        String content = 
-                "홈페이지를 방문해주셔서 감사합니다." +
-                "<br><br>" + 
-                "인증 번호는 " + checkNum + "입니다." + 
-                "<br>" + 
-                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-        
-        try {
-            
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-            helper.setFrom(setFrom);
-            helper.setTo(toMail);
-            helper.setSubject(title);
-            helper.setText(content,true);
-            mailSender.send(message);
-            
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        
-        return Integer.toString(checkNum);
- 
-	}
     
     @RequestMapping(value = "/member/register", method = RequestMethod.POST)
     public String register(MemberDTO dto, String domainselect, HttpServletRequest req, HttpServletResponse res) throws SQLException, IOException {
@@ -116,8 +83,8 @@ public class MemberController {
     }
 
     
-    @RequestMapping(value ="/member/idCheck", method = RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value ="/member/idCheck", method = RequestMethod.POST)
 	public ResponseEntity<String> idCheck(String id, HttpServletRequest req){
 		
 		ResponseEntity<String> entity = null;
@@ -134,14 +101,15 @@ public class MemberController {
 	}
 	
   //이메일 인증
-  		@GetMapping("/mailCheck")
+  		@RequestMapping(value="member/mailCheck", method = RequestMethod.GET)
   		@ResponseBody
   		public String mailCheck(String email) throws Exception{
   			return memberService.joinEmail(email);
   					
   		};
-    @RequestMapping(value= "/member/mailChecked" ,method = RequestMethod.GET)
-    @ResponseBody
+  		
+  	@ResponseBody
+    @RequestMapping(value="/member/mailChecked", method = RequestMethod.GET)
     public String mail (String email,String name) throws SQLException {
     	
     	Map<String, String> map = new HashMap<>();
@@ -151,6 +119,7 @@ public class MemberController {
     	
     	int num = memberService.getMail(map);
     	
+    	System.out.println("나는넘 " + num);
     	return Integer.toString(num);
     	
     }

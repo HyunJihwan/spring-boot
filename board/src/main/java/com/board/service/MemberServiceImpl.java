@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public String joinEmail(String email) throws SQLException {
-		
+		makeRandomNumber();
 		/* 이메일 보내기 */
         String setFrom = "lsi6930@naver.com";
         String toMail = email;
