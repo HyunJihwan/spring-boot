@@ -6,7 +6,8 @@
 	<select id="login" resultType="com.board.domain.MemberDTO">
 	 	SELECT 
  			ID,
- 			PASSWORD
+ 			PASSWORD,
+ 			name
 		FROM
  			SUPERMEMBER
  		WHERE

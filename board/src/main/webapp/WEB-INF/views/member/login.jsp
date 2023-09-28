@@ -28,6 +28,7 @@
                             </div>
                             <button type="button" class="btn btn-primary" onclick="fn_login();">로그인</button>
                             <button type="button" class="btn btn-secondary" onclick='location.href="/member/joinForm"'>회원가입</button>
+                            <input type="hidden" name="name" id="name">
                         </form>
                     </div>
                 </div>
@@ -41,11 +42,14 @@
         function fn_login(){
             var id = $("#id").val();
             var password = $("#password").val();
-
+			var name = $("#name").val();
+    		
             $.ajax({
                 type : "POST",
                 url : "/member/login",
-                data : {id : id, password : password},
+                data : {id : id, 
+                    	password : password,
+                    	name : name},
                 success: function(data){
                     if(data == "Y"){
                         location.href = "/board/list";      

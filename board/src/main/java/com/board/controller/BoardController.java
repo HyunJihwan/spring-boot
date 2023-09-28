@@ -9,6 +9,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.board.domain.BoardDTO;
+import com.board.domain.MemberDTO;
 import com.board.service.BoardService;
 
 @Controller
@@ -48,16 +50,21 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/regi", method = RequestMethod.POST)
-	public ResponseEntity<String> regi(BoardDTO dto, Locale locale, Model model, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> regi(HttpSession session,BoardDTO dto, Locale locale, Model model, HttpServletRequest request) throws Exception {
 	    
 	    Date date = new Date(System.currentTimeMillis());
 	    SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); 
+	    
+	    MemberDTO user = (MemberDTO) session.getAttribute("user");
+	    
+	    dto.setName(user.getName());
 	    
 	    dto.setName(request.getParameter("name"));
 	    dto.setContent(request.getParameter("content"));
 	    dto.setSubject(request.getParameter("subject"));
 	    dto.setReg_date(format.format(date));
 	    
+	   
 	    if (boardService.regi(dto) == 1) {
 	        return new ResponseEntity<>("Y", HttpStatus.OK);
 	    } else {

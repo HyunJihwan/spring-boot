@@ -50,9 +50,12 @@ public class MemberController {
     @RequestMapping(value = "/member/login", method = RequestMethod.POST)
     public String regi(Locale locale, Model model, MemberDTO dto, HttpSession session) throws Exception {
         MemberDTO dto2 = memberService.login(dto);
-        if (dto2 != null) { // 수정: dto가 아닌 dto2로 비교
+        System.out.println("세션 dto2 : " +  dto2);
+        if (dto2 != null && !dto2.equals("")) { // 수정: dto가 아닌 dto2로 비교
             session.setAttribute("id", dto2.getId());
-            System.out.println(dto2.getId());
+            session.setAttribute("name", dto2.getName());
+            session.setAttribute("user", dto2);
+            System.out.println("왜 널임" + dto2.getName());
             return "Y";
         } else {
             return "N";
